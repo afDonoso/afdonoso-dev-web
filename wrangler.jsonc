@@ -1,0 +1,9 @@
+{
+  // Static-assets-only Worker: no `main`, no Worker script — Astro's build output is
+  // served directly. See CLAUDE.md for why this site ships zero server-side code.
+  "name": "afdonoso-dev-web",
+  "compatibility_date": "2026-08-22",
+  "assets": {
+    "directory": "./dist"
+  }
+}
