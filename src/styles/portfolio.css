@@ -1,0 +1,122 @@
+/* Root holding page only. Provisional by design — the real portfolio identity
+   is deferred and will be specified separately (handoff §6).
+   Deliberately shares nothing with chronica.css: system font stack, near-neutral
+   greys, no gilt, no paper, no Cormorant. A plain page is correct here; a page
+   that looks like it decided something is not. */
+
+:root {
+  --p-bg: #fbfbfa;
+  --p-fg: #17181a;
+  --p-fg2: #55585e;
+  --p-line: #e0e0dd;
+  --p-link: #33465c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --p-bg: #121314;
+    --p-fg: #ececea;
+    --p-fg2: #9b9ea4;
+    --p-line: #2a2c2e;
+    --p-link: #93aec9;
+  }
+}
+
+body.portfolio {
+  background: var(--p-bg);
+  color: var(--p-fg);
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+}
+
+.p-main {
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: clamp(48px, 10vw, 96px) clamp(20px, 6vw, 40px);
+}
+
+.p-name {
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.p-role {
+  margin-top: 10px;
+  font-size: 18px;
+  color: var(--p-fg2);
+  text-wrap: pretty;
+}
+
+.p-rule {
+  height: 1px;
+  margin: 32px 0;
+  background: var(--p-line);
+}
+
+.p-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--p-fg2);
+}
+
+.p-projects {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p-project {
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.p-project + p {
+  font-size: 16px;
+  color: var(--p-fg2);
+}
+
+.p-contact {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 16px;
+}
+
+.portfolio a {
+  color: var(--p-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.portfolio a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.portfolio *:focus-visible {
+  outline: 2px solid var(--p-link);
+  outline-offset: 3px;
+}
+
+/* Language switcher on the holding page. Same neutral treatment as everything
+   else here — it must not borrow Chronica's look. */
+.p-locales {
+  margin-top: 28px;
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+.p-locales a[aria-current="true"] {
+  color: var(--p-fg2);
+  text-decoration: none;
+}

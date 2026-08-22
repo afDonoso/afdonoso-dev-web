@@ -1,0 +1,44 @@
+---
+/** Chronica's footer: support address + the legal links, on every /chronica/*
+ *  page. It must NOT appear on the root.
+ *
+ *  The legal documents are English-only, so on Spanish pages these three links
+ *  point at the English URLs and say so — better than a link that promises a
+ *  translation nobody wrote. */
+import { useTranslations, localeUrl, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Omit the link back to the landing page when we're already on it. */
+  showHome?: boolean;
+}
+
+const { lang, showHome = true } = Astro.props;
+const t = useTranslations(lang);
+const legalIsForeign = lang !== 'en';
+---
+
+<footer class="c-footer">
+  <div class="c-footer__grid">
+    <div>
+      <div class="c-footer__wordmark">Chronica</div>
+      <p class="c-footer__tagline">{t.common.footer.tagline}</p>
+    </div>
+    <nav class="c-footer__nav">
+      {showHome && <a href={localeUrl(lang, 'chronica')}>{t.common.footer.chronica}</a>}
+      <a href="/chronica/privacy" hreflang="en" lang={legalIsForeign ? 'en' : undefined}>
+        {t.common.footer.privacyPolicy}
+        {legalIsForeign && <span class="c-footer__lang">{t.common.inEnglish}</span>}
+      </a>
+      <a href="/chronica/terms" hreflang="en" lang={legalIsForeign ? 'en' : undefined}>
+        {t.common.footer.termsOfService}
+        {legalIsForeign && <span class="c-footer__lang">{t.common.inEnglish}</span>}
+      </a>
+      <a href={localeUrl(lang, 'chronica/support')}>{t.common.footer.support}</a>
+    </nav>
+    <div class="c-footer__contact">
+      <a href="mailto:chronica-support@afdonoso.dev">chronica-support@afdonoso.dev</a>
+      <span class="c-footer__copy">{t.common.footer.copy}</span>
+    </div>
+  </div>
+</footer>

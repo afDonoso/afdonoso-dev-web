@@ -1,0 +1,120 @@
+---
+/**
+ * RELEASE BLOCKER. /chronica/support is entered in App Store Connect as
+ * Chronica's support URL. English is unprefixed, so this file emits that exact
+ * path — plus /es/chronica/support. Neither may move.
+ *
+ * The FAQ is <details>/<summary> — native disclosure, no accordion script, so
+ * every answer is reachable with JS disabled.
+ */
+import Chronica from '../../../layouts/Chronica.astro';
+import { useTranslations, localeUrl, type Lang } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: undefined }, props: { lang: 'en' as Lang } },
+    { params: { locale: 'es' }, props: { lang: 'es' as Lang } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const STEP_NUMERALS = ['I', 'II', 'III', 'IV'];
+
+/** Apple's subscription guide, split out of the answer so it can be a link. */
+function withLink(answer: string, linkText?: string) {
+  if (!linkText) return null;
+  const [before, after] = answer.split(linkText);
+  return { before, after, href: `https://${linkText}` };
+}
+---
+
+<Chronica
+  title={t.support.title}
+  description={t.support.description}
+  lang={lang}
+  eyebrow={t.support.eyebrow}
+  translatedPath="chronica/support"
+  nav={[
+    { href: '/chronica/privacy', label: t.common.nav.privacy },
+    { href: '/chronica/terms', label: t.common.nav.terms },
+  ]}
+>
+  <main>
+    <section class="c-support-intro">
+      <div class="c-support-intro__grid">
+        <div>
+          <div class="c-support-intro__eyebrow">{t.support.eyebrow}</div>
+          <h1>{t.support.heading}</h1>
+          <p class="c-support-intro__body">{t.support.body}</p>
+        </div>
+        <div>
+          <a class="c-mailcard" href="mailto:chronica-support@afdonoso.dev">
+            <span class="c-mailcard__label">{t.support.mail.label}</span>
+            <span class="c-mailcard__address">chronica-support@afdonoso.dev</span>
+            <span class="c-mailcard__note">{t.support.mail.note}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="c-faq">
+      <div class="c-faq__shell">
+        <div class="c-sectionhead" data-reveal>
+          <span class="c-eyebrow">{t.support.faqEyebrow}</span>
+          <span class="c-sectionhead__rule" data-rule></span>
+        </div>
+        <div class="c-faq__list" data-reveal>
+          {t.support.faqs.map((f, i) => {
+            const linked = withLink(f.a, 'linkText' in f ? f.linkText : undefined);
+            return (
+              <details class="c-faq__item" open={i === 0}>
+                <summary><span>{f.q}</span></summary>
+                <p class="c-faq__answer">
+                  {linked ? (
+                    <>
+                      {linked.before}
+                      <a href={linked.href}>{(f as { linkText: string }).linkText}</a>
+                      {linked.after}
+                    </>
+                  ) : (
+                    f.a
+                  )}
+                </p>
+              </details>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section class="c-report c-band">
+      <div class="c-report__grid" data-reveal>
+        <div>
+          <div class="c-eyebrow">{t.support.report.eyebrow}</div>
+          <h2>{t.support.report.heading}</h2>
+          <p class="c-report__body">{t.support.report.body}</p>
+        </div>
+        <ol class="c-report__steps">
+          {t.support.report.steps.map((text, i) => (
+            <li>
+              <span class="c-report__num" aria-hidden="true">{STEP_NUMERALS[i]}</span>
+              <span>{text}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="c-closing">
+      <div class="c-closing__inner" data-reveal>
+        <div class="c-closing__fleuron" aria-hidden="true">❦</div>
+        <p class="c-closing__line">{t.support.closing}</p>
+        <p class="c-closing__mail">
+          <a href="mailto:chronica-support@afdonoso.dev">chronica-support@afdonoso.dev</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</Chronica>

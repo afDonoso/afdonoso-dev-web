@@ -1,0 +1,22 @@
+---
+/**
+ * Rendered from src/content/TermsOfService.md through Astro's Markdown
+ * pipeline. Never hand-convert to HTML — see privacy.astro.
+ */
+import Legal from '../../layouts/Legal.astro';
+import Content, { frontmatter, getHeadings } from '../../content/TermsOfService.md';
+---
+
+<Legal
+  title={frontmatter.title}
+  description={frontmatter.description}
+  eyebrow="Terms"
+  lastUpdated={frontmatter.lastUpdated}
+  headings={getHeadings()}
+  nav={[
+    { href: '/chronica/privacy', label: 'Privacy' },
+    { href: '/chronica/support', label: 'Support' },
+  ]}
+>
+  <Content />
+</Legal>

@@ -1,0 +1,135 @@
+---
+/**
+ * Chronica's area layout: tokens, header, footer, and the two progressive
+ * scripts. Used by every /chronica/* page and nowhere else.
+ */
+import Base from './Base.astro';
+import ChronicaHeader from '../components/ChronicaHeader.astro';
+import ChronicaFooter from '../components/ChronicaFooter.astro';
+import '../styles/chronica.css';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  eyebrow: string;
+  nav: { href: string; label: string; inPage?: boolean }[];
+  /** false on the landing page itself. */
+  footerHome?: boolean;
+  /**
+   * Path without locale prefix for routes that exist in both languages.
+   * Omitted on the legal pages, which are English-only — that omission is what
+   * drops both the hreflang alternates and the language switcher.
+   */
+  translatedPath?: string;
+}
+
+const {
+  title,
+  description,
+  lang,
+  eyebrow,
+  nav,
+  footerHome = true,
+  translatedPath,
+} = Astro.props;
+---
+
+<Base
+  title={title}
+  description={description}
+  lang={lang}
+  bodyClass="chronica"
+  favicon="/favicon-chronica.svg"
+  translatedPath={translatedPath}
+>
+  <Fragment slot="head">
+    {/* Runs before first paint so a stored choice never flashes. With JS off
+        nothing runs and prefers-color-scheme alone decides — which is correct. */}
+    <script is:inline>
+      (function () {
+        var r = document.documentElement;
+        r.classList.add('js');
+        try {
+          var m = localStorage.getItem('chronica-mode');
+          if (m === 'dark' || m === 'light') r.setAttribute('data-mode', m);
+        } catch (e) {}
+      })();
+    </script>
+  </Fragment>
+
+  <slot name="progress" />
+  <ChronicaHeader lang={lang} eyebrow={eyebrow} nav={nav} translatedPath={translatedPath} />
+  <slot />
+  <ChronicaFooter lang={lang} showHome={footerHome} />
+
+  {/* Progressive enhancements. Every one of them is additive: the page is
+      complete, readable and in the right colour scheme without any of it. */}
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+
+      /* --- mode toggle: built here, so it is never dead markup ------------ */
+      var slot = document.querySelector('[data-mode-slot]');
+      if (slot) {
+        var btn = document.createElement('button');
+        btn.className = 'c-modetoggle';
+        btn.type = 'button';
+        var glyph = document.createElement('span');
+        glyph.className = 'c-modetoggle__glyph';
+        glyph.setAttribute('aria-hidden', 'true');
+        var label = document.createElement('span');
+        label.className = 'c-modetoggle__label';
+        btn.appendChild(glyph);
+        btn.appendChild(label);
+
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var isDark = function () {
+          var m = root.getAttribute('data-mode');
+          return m === 'dark' || (m === null && mq.matches);
+        };
+        /* Labels come from the layout's dictionary, not from this script —
+           otherwise the toggle is the one English string on a Spanish page. */
+        var copy = slot.dataset;
+        var paint = function () {
+          var d = isDark();
+          glyph.textContent = d ? '☾' : '☼';
+          label.textContent = d ? copy.labelDark : copy.labelLight;
+          btn.setAttribute('aria-label', d ? copy.labelToLight : copy.labelToDark);
+        };
+        btn.addEventListener('click', function () {
+          var next = isDark() ? 'light' : 'dark';
+          root.setAttribute('data-mode', next);
+          try { localStorage.setItem('chronica-mode', next); } catch (e) {}
+          paint();
+        });
+        mq.addEventListener('change', paint);
+        paint();
+        slot.appendChild(btn);
+      }
+
+      /* --- scroll reveals ------------------------------------------------- */
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              e.target.setAttribute(
+                e.target.hasAttribute('data-rule') ? 'data-rule' : 'data-reveal',
+                'in'
+              );
+              io.unobserve(e.target);
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+        );
+        document.querySelectorAll('[data-reveal],[data-rule]').forEach(function (el) {
+          io.observe(el);
+        });
+      } else {
+        root.classList.remove('js');
+      }
+    })();
+  </script>
+</Base>

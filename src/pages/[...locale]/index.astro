@@ -1,0 +1,44 @@
+---
+/**
+ * Holding page. The portfolio design is deliberately deferred (handoff §6):
+ * this exists only so the root of a live domain isn't a 404.
+ *
+ * Do not "improve" this by borrowing Chronica's palette or Cormorant Garamond.
+ * A plain page is correct; a page that looks like it decided something is not.
+ *
+ * Emits / (en) and /es.
+ */
+import Portfolio from '../../layouts/Portfolio.astro';
+import LocaleSwitcher from '../../components/LocaleSwitcher.astro';
+import { useTranslations, localeUrl, type Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: undefined }, props: { lang: 'en' as Lang } },
+    { params: { locale: 'es' }, props: { lang: 'es' as Lang } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Portfolio title={t.home.title} description={t.home.description} lang={lang}>
+  <h1 class="p-name">{t.home.name}</h1>
+  <p class="p-role">{t.home.role}</p>
+
+  <div class="p-rule"></div>
+
+  <h2 class="p-label">{t.home.projectsLabel}</h2>
+  <div class="p-projects">
+    <p class="p-project"><a href={localeUrl(lang, 'chronica')}>Chronica</a></p>
+    <p>{t.home.chronicaBlurb}</p>
+  </div>
+
+  <div class="p-contact">
+    <a href="mailto:hello@afdonoso.dev">hello@afdonoso.dev</a>
+    <a href="https://github.com/afDonoso" rel="me">github.com/afDonoso</a>
+  </div>
+
+  <LocaleSwitcher lang={lang} path="" label={t.common.switchLanguage} class="p-locales" />
+</Portfolio>

@@ -1,0 +1,27 @@
+---
+/**
+ * RELEASE BLOCKER. This URL is entered in App Store Connect as Chronica's
+ * privacy policy and is linked from the paywall. It must stay publicly
+ * reachable at exactly this path — a 404 here is a production incident.
+ *
+ * Rendered from src/content/PrivacyPolicy.md through Astro's Markdown
+ * pipeline. Never hand-convert it to HTML: that conversion step is what makes
+ * the site copy and the in-app copy drift apart.
+ */
+import Legal from '../../layouts/Legal.astro';
+import Content, { frontmatter, getHeadings } from '../../content/PrivacyPolicy.md';
+---
+
+<Legal
+  title={frontmatter.title}
+  description={frontmatter.description}
+  eyebrow="Privacy"
+  lastUpdated={frontmatter.lastUpdated}
+  headings={getHeadings()}
+  nav={[
+    { href: '/chronica/terms', label: 'Terms' },
+    { href: '/chronica/support', label: 'Support' },
+  ]}
+>
+  <Content />
+</Legal>

@@ -1,0 +1,34 @@
+---
+/**
+ * Language switcher. Plain links, rendered server-side — no JS, so both locales
+ * stay reachable with scripting disabled.
+ *
+ * Only rendered on routes that exist in both languages. The legal pages get no
+ * switcher: offering "ES" there would either 404 or promise a translation that
+ * does not exist.
+ */
+import { languages, type Lang } from '../i18n/ui';
+import { localeUrl } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Path without locale prefix, e.g. "" for the root or "chronica/support". */
+  path: string;
+  label: string;
+  class?: string;
+}
+
+const { lang, path, label, class: className } = Astro.props;
+const codes = Object.keys(languages) as Lang[];
+---
+
+<nav class:list={['c-locales', className]} aria-label={label}>
+  {codes.map((code) => (
+    <a
+      href={localeUrl(code, path)}
+      hreflang={code}
+      lang={code}
+      aria-current={code === lang ? 'true' : undefined}
+    >{code.toUpperCase()}</a>
+  ))}
+</nav>

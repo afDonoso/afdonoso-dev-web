@@ -1,0 +1,101 @@
+/* Shared reset + self-hosted webfont. No visual identity lives here — see CLAUDE.md.
+   Loaded by Base.astro on every page, including the root holding page. */
+
+/* Cormorant Garamond, variable, OFL 1.1 — the same files the iOS app ships.
+   Self-hosted from our own origin: no Google Fonts, no CDN.
+   Subset to Latin + Latin-1 + Latin Ext-A + typographic punctuation and converted to
+   WOFF2: 1.6 MB of TTF -> 136 KB. Variable wght axis (300-700) preserved, so one file
+   per style covers every weight.
+   Note: the subset drops U+2766 (❦), which the full font had — see CLAUDE.md. */
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond-Italic.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class],
+ol[class] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/* Mandatory — do not remove (design handoff, Accessibility). */
+*:focus-visible {
+  outline: 2px solid var(--accent, currentColor);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

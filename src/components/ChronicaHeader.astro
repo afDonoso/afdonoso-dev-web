@@ -1,0 +1,50 @@
+---
+/** Sticky header. Identical on all Chronica pages — only the eyebrow word, the
+ *  nav links and the locale switcher's target differ. */
+import LocaleSwitcher from './LocaleSwitcher.astro';
+import { useTranslations, localeUrl, type Lang } from '../i18n/utils';
+
+interface NavItem {
+  href: string;
+  label: string;
+  /** In-page anchor: hidden under 720px, where the header must not overflow. */
+  inPage?: boolean;
+}
+
+interface Props {
+  lang: Lang;
+  /** The word beside the wordmark: iOS | Privacy | Terms | Support */
+  eyebrow: string;
+  nav: NavItem[];
+  /**
+   * Path without locale prefix, for the language switcher. Omit on
+   * English-only routes (the legal pages) to leave the switcher out.
+   */
+  translatedPath?: string;
+}
+
+const { lang, eyebrow, nav, translatedPath } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header class="c-header">
+  <a class="c-header__mark" href={localeUrl(lang, 'chronica')}>
+    <span class="c-header__wordmark">Chronica</span>
+    <span class="c-header__eyebrow">{eyebrow}</span>
+  </a>
+  <nav
+    class="c-nav"
+    data-mode-slot
+    data-label-light={t.common.mode.light}
+    data-label-dark={t.common.mode.dark}
+    data-label-to-light={t.common.mode.toLight}
+    data-label-to-dark={t.common.mode.toDark}
+  >
+    {nav.map((l) => (
+      <a class={l.inPage ? 'c-nav__min' : undefined} href={l.href}>{l.label}</a>
+    ))}
+    {translatedPath !== undefined && (
+      <LocaleSwitcher lang={lang} path={translatedPath} label={t.common.switchLanguage} />
+    )}
+  </nav>
+</header>

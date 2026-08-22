@@ -1,0 +1,118 @@
+---
+/**
+ * The shell shared by /chronica/privacy and /chronica/terms. Only the document
+ * differs. The contents rail is generated from the Markdown's own headings, so
+ * it cannot drift out of sync with the document.
+ *
+ * ENGLISH ONLY, on purpose. These documents are byte-synced copies of the app's
+ * own legal text; a Spanish version here would have no counterpart in the app,
+ * on the one URL App Store Connect points at. So: no `lang` prop, no
+ * `translatedPath` — which is what suppresses both the hreflang alternates and
+ * the language switcher. /es/chronica/{privacy,terms} 301 here instead, via
+ * public/_redirects.
+ */
+import Chronica from './Chronica.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  lastUpdated: string;
+  headings: Heading[];
+  nav: { href: string; label: string }[];
+}
+
+const { title, description, eyebrow, lastUpdated, headings, nav } = Astro.props;
+const toc = headings.filter((h) => h.depth === 2);
+
+const dateLabel = new Date(lastUpdated + 'T00:00:00Z').toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<Chronica
+  title={`${title} · Chronica`}
+  description={description}
+  lang="en"
+  eyebrow={eyebrow}
+  nav={nav}
+>
+  <div class="c-progress" aria-hidden="true" slot="progress"><span></span></div>
+
+  <div class="c-legal">
+    <div class="c-masthead">
+      <div class="c-masthead__eyebrow">Chronica</div>
+      <h1>{title}</h1>
+      <div class="c-divider" aria-hidden="true">
+        <span></span><span class="c-divider__orn">❦</span><span></span>
+      </div>
+      <p class="c-masthead__date">Last updated {dateLabel}</p>
+    </div>
+
+    <div class="c-legal__grid">
+      <details class="c-toc-m">
+        <summary>Contents</summary>
+        <nav class="c-toc__list">
+          {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+        </nav>
+      </details>
+
+      <aside class="c-toc" data-toc>
+        <div class="c-toc__label">Contents</div>
+        <nav class="c-toc__list">
+          {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+        </nav>
+      </aside>
+
+      <article class="c-prose">
+        <slot />
+      </article>
+    </div>
+  </div>
+
+  {/* Progress rule + contents scroll-spy. Decoration only: with JS off the rule
+      stays invisible and the rail still links every section. */}
+  <script is:inline>
+    (function () {
+      var bar = document.querySelector('.c-progress span');
+      if (bar) {
+        var onScroll = function () {
+          var h = document.documentElement;
+          var max = h.scrollHeight - h.clientHeight;
+          bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, h.scrollTop / max) : 0) + ')';
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      var rail = document.querySelector('[data-toc] .c-toc__list');
+      var sections = document.querySelectorAll('.c-prose h2[id]');
+      if (rail && sections.length && 'IntersectionObserver' in window) {
+        var mark = function (id) {
+          rail.querySelectorAll('a').forEach(function (a) {
+            if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+          });
+        };
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) mark(e.target.id);
+            });
+          },
+          { rootMargin: '-15% 0px -70% 0px' }
+        );
+        sections.forEach(function (s) { io.observe(s); });
+      }
+    })();
+  </script>
+</Chronica>

@@ -1,0 +1,30 @@
+---
+/**
+ * Root area layout. A stub: the real portfolio design is deferred and lands
+ * later without touching anything under /chronica.
+ * Chronica's header and footer must never appear here.
+ */
+import Base from './Base.astro';
+import '../styles/portfolio.css';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+}
+
+const { title, description, lang } = Astro.props;
+---
+
+<Base
+  title={title}
+  description={description}
+  lang={lang}
+  bodyClass="portfolio"
+  translatedPath=""
+>
+  <main class="p-main">
+    <slot />
+  </main>
+</Base>

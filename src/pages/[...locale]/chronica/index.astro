@@ -1,0 +1,317 @@
+---
+/**
+ * Chronica's landing page — the destination for the App Store marketing URL.
+ * Emits /chronica (en) and /es/chronica.
+ *
+ * All copy comes from src/i18n/ui.ts, where the Spanish is quoted from the
+ * app's own strings rather than translated fresh. Claim nothing that isn't
+ * true yet.
+ */
+import Chronica from '../../../layouts/Chronica.astro';
+import Placeholder from '../../../components/Placeholder.astro';
+import { useTranslations, localeUrl, type Lang } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: undefined }, props: { lang: 'en' as Lang } },
+    { params: { locale: 'es' }, props: { lang: 'es' as Lang } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const PLATE_NUMERALS = ['I', 'II', 'III', 'IV'];
+
+/* The app's six themes. The site itself is not themed — only the preview card
+   in this one section recolours. Theme names are untranslated in the app
+   (Theme::themeName*), so they are untranslated here too. */
+const THEME_COLORS = [
+  { name: 'Ink', accent: '#9C4A24', gilt: '#B3823F', darkAccent: '#D98A52', darkGilt: '#D9A259' },
+  { name: 'Foxed', accent: '#A9702A', gilt: '#B08A3C', darkAccent: '#D9A24E', darkGilt: '#D2A64E' },
+  { name: 'Forest', accent: '#234F38', gilt: '#74945A', darkAccent: '#57A074', darkGilt: '#A8BD7C' },
+  { name: 'Morocco', accent: '#8A2F34', gilt: '#B57A52', darkAccent: '#D16A6F', darkGilt: '#D99A6A' },
+  { name: 'Nocturne', accent: '#34567D', gilt: '#8C93A6', darkAccent: '#7F9FCE', darkGilt: '#AAB4CC' },
+  { name: 'Amethyst', accent: '#6D3F80', gilt: '#9179A3', darkAccent: '#B088C9', darkGilt: '#C1A6D0' },
+];
+
+const themes = THEME_COLORS.map((c, i) => ({ ...c, motto: t.landing.themes.mottos[i] }));
+
+/* [label, free, gilt] — the last row (Themes) is rendered separately because
+   its cells are tier names, not check marks. */
+const editions = t.landing.editions.rows.map(
+  (label, i) => [label, i < 5, true] as [string, boolean, boolean]
+);
+---
+
+<Chronica
+  title={t.landing.title}
+  description={t.landing.description}
+  lang={lang}
+  eyebrow={t.landing.eyebrow}
+  translatedPath="chronica"
+  nav={[
+    { href: '#features', label: t.common.nav.features, inPage: true },
+    { href: '#privacy', label: t.common.nav.privacy },
+    { href: '#themes', label: t.common.nav.themes, inPage: true },
+    { href: localeUrl(lang, 'chronica/support'), label: t.common.nav.support },
+  ]}
+  footerHome={false}
+>
+  <main>
+    <section class="c-hero" id="top">
+      <div class="c-hero__grid">
+        <div>
+          <div class="c-hero__exlibris">{t.landing.hero.exLibris}</div>
+          <div class="c-hero__fleuron" aria-hidden="true">❦</div>
+          <h1 class="c-hero__title">Chronica</h1>
+          <p class="c-hero__subtitle">{t.landing.hero.subtitle}</p>
+          <div class="c-hero__rule" aria-hidden="true"></div>
+          <p class="c-hero__body">{t.landing.hero.body}</p>
+          <div class="c-hero__cta">
+            {/* Not a link: the TestFlight link does not exist yet. */}
+            <span class="c-testflight" aria-disabled="true" title={t.landing.hero.testflightTitle}>
+              {t.landing.hero.testflight}
+            </span>
+            <span class="c-note">{t.landing.hero.placeholderNote}</span>
+          </div>
+        </div>
+        <div class="c-hero__icon">
+          <div>
+            <Placeholder
+              variant="c-slot--icon"
+              label={t.landing.hero.iconAlt}
+              caption={t.landing.hero.iconCaption}
+              fleuron
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c-features" id="features">
+      <div class="c-shell">
+        <div class="c-sectionhead" data-reveal>
+          <span class="c-eyebrow">{t.landing.features.eyebrow}</span>
+          <span class="c-sectionhead__rule" data-rule></span>
+        </div>
+
+        {t.landing.features.plates.map((p, i) => (
+          <article class={`c-plate${i % 2 === 1 ? ' c-plate--flip' : ''}`} data-reveal>
+            <div>
+              <div class="c-plate__num">
+                {t.landing.features.plateWord} {PLATE_NUMERALS[i]}
+              </div>
+              <h2>{p.title}</h2>
+              <p class="c-plate__body">{p.body}</p>
+            </div>
+            <div class="c-plate__figure">
+              <Placeholder
+                variant="c-slot--screen"
+                label={p.alt}
+                caption={[t.landing.features.screenshotWord, p.slot, '390 × 844']}
+              />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* Nothing here embellishes the app's actual behaviour. Keep it that way. */}
+    <section class="c-privacy c-band" id="privacy">
+      <div class="c-bookplate" data-reveal>
+        <span class="c-bookplate__inner" aria-hidden="true"></span>
+        <span class="c-bookplate__corner c-bookplate__corner--tl" aria-hidden="true">❧</span>
+        <span class="c-bookplate__corner c-bookplate__corner--tr" aria-hidden="true">❧</span>
+        <span class="c-bookplate__corner c-bookplate__corner--bl" aria-hidden="true">❧</span>
+        <span class="c-bookplate__corner c-bookplate__corner--br" aria-hidden="true">❧</span>
+
+        <div class="c-eyebrow">{t.landing.privacy.eyebrow}</div>
+        <blockquote>{t.landing.privacy.quote}</blockquote>
+        <div class="c-divider" aria-hidden="true">
+          <span></span><span class="c-divider__orn">❖</span><span></span>
+        </div>
+        <p class="c-bookplate__body">{t.landing.privacy.body}</p>
+        <ul class="c-pills">
+          {t.landing.privacy.pills.map((pill) => <li>{pill}</li>)}
+        </ul>
+        <p class="c-bookplate__more">
+          {/* English-only document — say so when the page isn't English. */}
+          <a href="/chronica/privacy" hreflang="en" lang={lang === 'en' ? undefined : 'en'}>
+            {t.landing.privacy.more}
+          </a>
+          {lang !== 'en' && <span class="c-footer__lang">{t.common.inEnglish}</span>}
+        </p>
+      </div>
+    </section>
+
+    <section class="c-themes" id="themes">
+      <div class="c-shell">
+        <div class="c-sectionhead" data-reveal>
+          <span class="c-eyebrow">{t.landing.themes.eyebrow}</span>
+          <span class="c-sectionhead__rule" data-rule></span>
+        </div>
+        <div class="c-themes__grid" data-reveal>
+          <div>
+            <h2>{t.landing.themes.heading}</h2>
+            <p class="c-themes__body">{t.landing.themes.body}</p>
+            {/* Static spans; the script upgrades them to buttons. Without JS the
+                six themes are still named and shown. */}
+            <div class="c-swatches" role="group" aria-label={t.landing.themes.groupLabel} data-swatches>
+              {themes.map((th, i) => (
+                <span
+                  class="c-swatch"
+                  data-theme-index={i}
+                  data-accent={th.accent}
+                  data-gilt={th.gilt}
+                  data-dark-accent={th.darkAccent}
+                  data-dark-gilt={th.darkGilt}
+                  data-name={th.name}
+                  data-motto={th.motto}
+                  style={`--sw-accent:${th.accent};--sw-gilt:${th.gilt}`}
+                >
+                  <span class="c-swatch__chip" aria-hidden="true"></span>{th.name}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="c-preview" data-preview style={`--sw-accent:${themes[0].accent};--sw-gilt:${themes[0].gilt}`}>
+            <span class="c-preview__inner" aria-hidden="true"></span>
+            <div class="c-preview__exlibris">{t.landing.themes.exLibris}</div>
+            <div class="c-preview__fleuron" aria-hidden="true">❦</div>
+            <div class="c-preview__name" data-preview-name>{themes[0].name}</div>
+            <div class="c-divider" aria-hidden="true">
+              <span></span><span class="c-divider__orn">❖</span><span></span>
+            </div>
+            <p class="c-preview__motto" data-preview-motto>{themes[0].motto}</p>
+            <div class="c-preview__stack">
+              <div class="c-preview__bar" aria-hidden="true"><span></span></div>
+              <span class="c-preview__button" aria-hidden="true">{t.landing.themes.continueReading}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c-editions c-band">
+      <div class="c-editions__shell" data-reveal>
+        <div class="c-editions__head">
+          <div class="c-eyebrow">{t.landing.editions.eyebrow}</div>
+          <h2>{t.landing.editions.heading}</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">{t.landing.editions.whatYouGet}</th>
+              <th scope="col">{t.landing.editions.free}</th>
+              <th scope="col" class="is-gilt">
+                <span class="c-editions__giltlabel">
+                  <span class="c-orn" aria-hidden="true">❦</span>{t.landing.editions.gilt}
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {editions.map(([label, free, gilt]) => (
+              <tr>
+                <td>{label}</td>
+                <td>
+                  {free
+                    ? <span class="c-yes" aria-label={t.landing.editions.included}>✓</span>
+                    : <span class="c-no" aria-label={t.landing.editions.notIncluded}>—</span>}
+                </td>
+                <td class="is-gilt">
+                  {gilt
+                    ? <span class="c-yes" aria-label={t.landing.editions.included}>✓</span>
+                    : <span class="c-no" aria-label={t.landing.editions.notIncluded}>—</span>}
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td>{t.landing.editions.themesRow}</td>
+              <td><span class="c-tier">{t.landing.editions.themesFree}</span></td>
+              <td class="is-gilt"><span class="c-tier">{t.landing.editions.themesGilt}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="c-cta">
+      <div class="c-cta__inner" data-reveal>
+        <div class="c-cta__fleuron" aria-hidden="true">❦</div>
+        <h2>{t.landing.cta.heading}</h2>
+        <p class="c-cta__body">{t.landing.cta.body}</p>
+        <div class="c-cta__stack">
+          <span class="c-testflight" aria-disabled="true">{t.landing.hero.testflight}</span>
+          <Placeholder
+            variant="c-slot--badge"
+            label={t.landing.cta.badgeAlt}
+            caption={[t.landing.cta.badgeCaption]}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {/* Theme swatches. Upgrades the static list to a picker; the preview card is
+      already correct in Ink without it. */}
+  <script is:inline>
+    (function () {
+      var group = document.querySelector('[data-swatches]');
+      var card = document.querySelector('[data-preview]');
+      if (!group || !card) return;
+
+      var name = card.querySelector('[data-preview-name]');
+      var motto = card.querySelector('[data-preview-motto]');
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      var root = document.documentElement;
+      var current = 0;
+
+      var isDark = function () {
+        var m = root.getAttribute('data-mode');
+        return m === 'dark' || (m === null && mq.matches);
+      };
+
+      var buttons = [];
+      Array.prototype.forEach.call(group.querySelectorAll('.c-swatch'), function (span, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'c-swatch';
+        btn.innerHTML = span.innerHTML;
+        Array.prototype.forEach.call(span.attributes, function (a) {
+          if (a.name !== 'class') btn.setAttribute(a.name, a.value);
+        });
+        btn.addEventListener('click', function () { select(i); });
+        span.parentNode.replaceChild(btn, span);
+        buttons.push(btn);
+      });
+
+      function paint() {
+        var dark = isDark();
+        buttons.forEach(function (b, i) {
+          var a = dark ? b.dataset.darkAccent : b.dataset.accent;
+          var g = dark ? b.dataset.darkGilt : b.dataset.gilt;
+          b.style.setProperty('--sw-accent', a);
+          b.style.setProperty('--sw-gilt', g);
+          b.setAttribute('aria-pressed', String(i === current));
+        });
+        var t = buttons[current];
+        card.style.setProperty('--sw-accent', dark ? t.dataset.darkAccent : t.dataset.accent);
+        card.style.setProperty('--sw-gilt', dark ? t.dataset.darkGilt : t.dataset.gilt);
+        if (name) name.textContent = t.dataset.name;
+        if (motto) motto.textContent = t.dataset.motto;
+      }
+
+      function select(i) {
+        current = i;
+        paint();
+      }
+
+      mq.addEventListener('change', paint);
+      new MutationObserver(paint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
+      paint();
+    })();
+  </script>
+</Chronica>

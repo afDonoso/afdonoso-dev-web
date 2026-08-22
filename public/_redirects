@@ -1,0 +1,7 @@
+# Cloudflare Pages redirects.
+#
+# The legal documents are English-only — they are byte-synced copies of the
+# app's own text (see README). A Spanish visitor who lands on a /es/ legal URL
+# gets the English document rather than a 404 on a release-blocker path.
+/es/chronica/privacy  /chronica/privacy  301
+/es/chronica/terms    /chronica/terms    301
