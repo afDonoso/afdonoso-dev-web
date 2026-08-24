@@ -78,11 +78,21 @@ const editions = t.landing.editions.rows.map(
         </div>
         <div class="c-hero__icon">
           <div>
-            <Placeholder
-              variant="c-slot--icon"
-              label={t.landing.hero.iconAlt}
-              caption={t.landing.hero.iconCaption}
-              fleuron
+            {/* Two elements rather than <picture>: the mode toggle sets data-mode on
+                the root, which a source[media] query cannot see. CSS shows one. */}
+            <img
+              class="c-appicon c-appicon--light"
+              src="/chronica/app-icon.webp"
+              alt={t.landing.hero.iconAlt}
+              width="512"
+              height="512"
+            />
+            <img
+              class="c-appicon c-appicon--dark"
+              src="/chronica/app-icon-dark.webp"
+              alt={t.landing.hero.iconAlt}
+              width="512"
+              height="512"
             />
           </div>
         </div>

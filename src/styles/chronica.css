@@ -523,27 +523,40 @@ body.chronica {
   color: var(--muted);
 }
 
-.c-slot--icon {
+/* --------------------------------------------------------------- app icon -- */
+
+/* Two <img>s, one shown: the mode toggle writes data-mode on the root, which a
+   <picture> media query cannot read, so the light/dark swap follows the same
+   pattern as the colour tokens at the top of this file. */
+
+.c-appicon {
+  display: block;
   width: clamp(190px, 26vw, 244px);
-  aspect-ratio: 1;
+  height: auto;
   border-radius: 23%;
-  border-color: color-mix(in srgb, var(--gilt) 55%, transparent);
-  background: repeating-linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--gilt) 11%, transparent) 0 9px,
-      transparent 9px 18px
-    ),
-    var(--surface);
   box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 55%, transparent);
 }
 
-.c-slot--icon .c-orn {
-  font-size: 26px;
+.c-appicon--dark {
+  display: none;
 }
 
-.c-slot--icon .c-slot__caption {
-  letter-spacing: 0.12em;
-  line-height: 1.7;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) .c-appicon--light {
+    display: none;
+  }
+
+  :root:not([data-mode="light"]) .c-appicon--dark {
+    display: block;
+  }
+}
+
+:root[data-mode="dark"] .c-appicon--light {
+  display: none;
+}
+
+:root[data-mode="dark"] .c-appicon--dark {
+  display: block;
 }
 
 /* -------------------------------------------------------------- features -- */

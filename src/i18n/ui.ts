@@ -78,8 +78,7 @@ export const ui = {
         testflight: 'Join the TestFlight beta',
         testflightTitle: 'TestFlight link not issued yet',
         placeholderNote: '[ placeholder — link not issued ]',
-        iconAlt: 'App icon placeholder',
-        iconCaption: ['app icon', '1024 × 1024'],
+        iconAlt: 'The Chronica app icon',
       },
       features: {
         eyebrow: 'The volume in four parts',
@@ -294,8 +293,7 @@ export const ui = {
         testflight: 'Únete a la beta de TestFlight',
         testflightTitle: 'El enlace de TestFlight aún no existe',
         placeholderNote: '[ marcador — enlace no emitido ]',
-        iconAlt: 'Marcador del ícono de la app',
-        iconCaption: ['ícono de la app', '1024 × 1024'],
+        iconAlt: 'El ícono de la app Chronica',
       },
       features: {
         eyebrow: 'El volumen en cuatro partes',
