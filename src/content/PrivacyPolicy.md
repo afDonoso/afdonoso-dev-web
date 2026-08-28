@@ -24,6 +24,10 @@ Everything you create in Chronica is stored locally on your device using Apple's
 
 We cannot see this data. It never leaves your device except as described below.
 
+## On-device AI
+
+Some features, such as suggested word definitions, may use Apple Intelligence — Apple's on-device AI system — to generate a suggestion. This processing happens locally on your device using Apple's on-device models; the request is not sent to us or to any third party.
+
 ## iCloud sync
 
 If iCloud sync is enabled in a future version, your reading data is synchronized through **your own private iCloud account** so it can move between your devices. This uses Apple's iCloud infrastructure. We do not have access to the contents of your iCloud data, and it is governed by [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
