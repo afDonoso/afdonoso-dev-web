@@ -31,7 +31,13 @@ Some features, such as suggested word definitions, may use Apple Intelligence �
 
 ## iCloud sync
 
-If iCloud sync is enabled in a future version, your reading data is synchronized through **your own private iCloud account** so it can move between your devices. This uses Apple's iCloud infrastructure. We do not have access to the contents of your iCloud data, and it is governed by [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
+Chronica offers optional iCloud sync as part of the Gilt Edition. **It is off unless you turn it on**, in the You tab under Preferences → iCloud Sync.
+
+When it is on, your reading data is synchronized through **your own private iCloud account** so it can move between your devices. It goes to Apple, not to us: the data is stored in your account's private CloudKit database, we have no access to its contents, and Apple's handling of it is governed by [Apple's Privacy Policy](https://www.apple.com/legal/privacy/).
+
+What syncs: the books on your shelves, reading sessions, chapter notes, and your other notes. What does not sync, and stays on the device it was made on: your theme and app icon, reading reminders, cached cover images, and your name.
+
+You can turn sync off at any time — your books stay on your device when you do. **Delete iCloud copy**, on the same screen, removes Chronica's data from your iCloud account without touching the copy on your device.
 
 ## What is sent to servers
 

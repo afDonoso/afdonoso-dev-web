@@ -125,9 +125,9 @@ export const ui = {
         eyebrow: 'Privacy, stated plainly',
         // Onboarding::beginBody — do not embellish this
         quote:
-          '“Nothing leaves your device. Your shelf, your notes, and your reading history stay on your phone.”',
+          '“Your shelf, your notes, and your reading history stay on your phone. Nothing leaves it unless you turn on iCloud sync.”',
         // site-original
-        body: 'Chronica is offline-first. Your shelf, sessions, notes, stats and badges live on-device in SwiftData. There is no account, no login, and no analytics — only book searches reach a server, and they carry nothing about you.',
+        body: 'Chronica is offline-first. Your shelf, sessions, notes, stats and badges live on-device in SwiftData. There is no account, no login, and no analytics — only book searches reach a server, and they carry nothing about you. iCloud sync is off until you turn it on; when you do, your library moves through your own private iCloud account, which we cannot read.',
         pills: ['No account', 'No ads', 'No analytics SDKs', 'No cross-app tracking'],
         more: 'Read the full privacy policy →',
       },
@@ -167,6 +167,7 @@ export const ui = {
           'The Chronicle — your reading bound as volumes',
           'Calendar and reading heatmap',
           'All-time statistics',
+          'iCloud sync across your devices',
         ],
         themesRow: 'Themes',
         themesFree: 'Ink',
@@ -340,9 +341,9 @@ export const ui = {
         eyebrow: 'Privacidad, sin rodeos',
         // Onboarding::beginBody — do not embellish this
         quote:
-          '«Nada sale de tu dispositivo. Tu estante, tus notas y tu historial de lectura permanecen en tu teléfono.»',
+          '«Tu estante, tus notas y tu historial de lectura permanecen en tu teléfono. Nada sale de ahí a menos que actives la sincronización con iCloud.»',
         // site-original
-        body: 'Chronica funciona sin conexión desde el principio. Tu estante, tus sesiones, tus notas, tus estadísticas y tus insignias viven en el dispositivo, en SwiftData. No hay cuenta, no hay inicio de sesión y no hay analítica — solo las búsquedas de libros llegan a un servidor, y no llevan nada sobre ti.',
+        body: 'Chronica funciona sin conexión desde el principio. Tu estante, tus sesiones, tus notas, tus estadísticas y tus insignias viven en el dispositivo, en SwiftData. No hay cuenta, no hay inicio de sesión y no hay analítica — solo las búsquedas de libros llegan a un servidor, y no llevan nada sobre ti. La sincronización con iCloud está desactivada hasta que tú la actives; cuando lo haces, tu biblioteca se mueve por tu propia cuenta privada de iCloud, que nosotros no podemos leer.',
         pills: ['Sin cuenta', 'Sin anuncios', 'Sin SDK de analítica', 'Sin rastreo entre apps'],
         more: 'Lee la política de privacidad completa →',
       },
@@ -382,6 +383,7 @@ export const ui = {
           'La Crónica — tu lectura encuadernada en volúmenes', // Onboarding::chronicleEyebrow
           'Calendario y mapa de calor de lectura', // Subscription::rowHeatmap
           'Estadísticas de todo el tiempo',
+          'Sincronización con iCloud entre tus dispositivos',
         ],
         themesRow: 'Temas', // Subscription::rowThemes
         themesFree: 'Ink', // Theme::themeNameInk — untranslated by design
