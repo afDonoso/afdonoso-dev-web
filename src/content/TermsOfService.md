@@ -1,7 +1,7 @@
 ---
 title: Terms of Service
 description: The terms governing your use of Chronica for iOS.
-lastUpdated: "2026-08-21"
+lastUpdated: "2026-10-03"
 ---
 
 These Terms of Service ("Terms") govern your use of the Chronica app ("the app"). By downloading or using the app, you agree to these Terms. If you do not agree, please do not use the app.
@@ -17,6 +17,9 @@ You agree not to:
 - Use the app for any unlawful purpose or in violation of any applicable law
 - Attempt to reverse engineer, decompile, or extract the source code of the app, except to the extent permitted by law
 - Interfere with or disrupt the app or the servers and networks it relies on
+- Access Chronica's book service by any means other than the app — including automated or scripted requests, credentials extracted from the app, or working around rate limits or device verification
+
+We may rate-limit, suspend or permanently revoke any device's access to the book service where we believe it is being used this way, or where its traffic threatens the availability of the service for others. Where practical we will do this proportionately, but we may act immediately to protect the service.
 
 ## Your content
 
@@ -24,7 +27,7 @@ Your reading data — shelves, sessions, notes, ratings, and goals — belongs t
 
 ## Book information
 
-Book details, cover images, and bestseller information are provided by third-party sources (including ISBNdb, The New York Times, and Open Library). This information may be incomplete, inaccurate, or out of date. We provide it "as is" and are not responsible for its accuracy.
+Book details and cover images are provided by a third-party source, ISBNdb. This information may be incomplete, inaccurate, or out of date. We provide it "as is" and are not responsible for its accuracy.
 
 ## Disclaimer of warranties
 

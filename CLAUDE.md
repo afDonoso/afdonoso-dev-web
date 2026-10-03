@@ -91,19 +91,12 @@ Chronica's footer (support email + legal links) belongs on `/chronica/*` pages a
 
 ---
 
-## Legal pages: two copies exist
+## Legal pages: this repo is the source of truth
 
-`src/content/PrivacyPolicy.md` and `TermsOfService.md` are **copies**. The source of truth
-is the BookTracker repo:
-
-```
-iOS/BookTracker/BookTracker/Resources/Legal/{PrivacyPolicy,TermsOfService}.md
-```
-
-The app renders those same files in-app via `MarkdownDocumentView`. **A change to legal
-text must land in three places together:** the app's copy, this repo's copy, and the
-support address at `YouView.swift:291`. Website-only edits are how the two versions start
-lying to each other.
+`src/content/PrivacyPolicy.md` and `TermsOfService.md` are the **only** copies. The app no
+longer bundles them: it opens `/chronica/privacy` and `/chronica/terms` in an in-app browser,
+so a change here is live in the app as soon as it deploys. The support address also appears
+in the app at `YouView.swift` — change both together.
 
 Render them through Astro's Markdown pipeline. Never hand-convert to HTML — that
 conversion step is exactly what causes drift.

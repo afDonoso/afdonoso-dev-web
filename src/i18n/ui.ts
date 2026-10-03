@@ -214,7 +214,7 @@ export const ui = {
         },
         {
           q: "Why can't I find a book in search?",
-          a: "Book data comes from third-party catalogues (ISBNdb, the New York Times Books API and Open Library), and they don't have everything — self-published titles, very new releases and some non-English editions are often missing. Try the ISBN or the barcode scanner first. If it's still absent, add it by hand: search has an Add manually option, and a manual book behaves like any other on your shelf.",
+          a: "Book data comes from a third-party catalogue, ISBNdb, and it doesn't have everything — self-published titles, very new releases and some non-English editions are often missing. Try the ISBN or the barcode scanner first. If it's still absent, add it by hand: search has an Add manually option, and a manual book behaves like any other on your shelf.",
         },
         {
           q: 'How do I report a bug?',
@@ -429,7 +429,7 @@ export const ui = {
         },
         {
           q: '¿Por qué no encuentro un libro en la búsqueda?',
-          a: 'Los datos de los libros vienen de catálogos de terceros (ISBNdb, la API de libros del New York Times y Open Library), y no lo tienen todo — los títulos autopublicados, las novedades muy recientes y algunas ediciones fuera del inglés suelen faltar. Prueba primero con el ISBN o con el escáner de códigos de barras. Si aun así no aparece, agrégalo a mano: la búsqueda tiene la opción Agregar manualmente, y un libro manual se comporta como cualquier otro en tu estante.',
+          a: 'Los datos de los libros vienen de un catálogo de terceros, ISBNdb, y no lo tiene todo — los títulos autopublicados, las novedades muy recientes y algunas ediciones fuera del inglés suelen faltar. Prueba primero con el ISBN o con el escáner de códigos de barras. Si aun así no aparece, agrégalo a mano: la búsqueda tiene la opción Agregar manualmente, y un libro manual se comporta como cualquier otro en tu estante.',
         },
         {
           q: '¿Cómo reporto un error?',
